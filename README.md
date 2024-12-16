@@ -38,6 +38,8 @@ npm install react-router-dom @mui/material @emotion/react @emotion/styled axios
 
 npm install -D eslint prettier eslint-config-prettier eslint-plugin-react eslint-plugin-react-hooks
 
+npm install @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome
+
 npx tsc --init
 
 npm i --save-dev @types/node
