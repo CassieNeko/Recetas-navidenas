@@ -3,9 +3,9 @@ import {
     getAllRecipes,
     addRecipe,
     getRecipeById,
-}from '../controllers/recipeController';
+} from '../controllers/recipeController';
 
-const router =Router();
+const router = Router();
 
 router.get('/', getAllRecipes);
 router.post('/', addRecipe);

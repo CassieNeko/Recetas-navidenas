@@ -1,14 +1,29 @@
 import { useState, useEffect } from 'react';
-import apiClient from '../utils/api';
+import axios from 'axios';
+
+interface User {
+  _id: string;
+  username: string;
+  email: string;
+}
 
 const useFetchUsers = () => {
-  const [users, setUsers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [users, setUsers] = useState<User[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    apiClient.get('/api/users')
-      .then(response => setUsers(response.data))
-      .finally(() => setLoading(false));
+    const fetchUsers = async () => {
+      try {
+        const response = await axios.get('/api/users');
+        setUsers(response.data);
+      } catch (error) {
+        console.error('Error fetching users:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
   }, []);
 
   return { users, loading };

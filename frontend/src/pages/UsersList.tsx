@@ -8,10 +8,17 @@ const UsersList: React.FC = () => {
   if (loading) return <p>Loading users...</p>;
 
   return (
-    <div className="users-list">
-      {users.map((user: any) => (
-        <UserCard key={user._id} username={user.username} email={user.email} />
-      ))}
+    <div className="container">
+      <h1>User List</h1>
+      <div className="users-list">
+        {users.map((user: any) => (
+          <UserCard
+            key={user._id}
+            username={user.username}
+            email={user.email}
+          />
+        ))}
+      </div>
     </div>
   );
 };

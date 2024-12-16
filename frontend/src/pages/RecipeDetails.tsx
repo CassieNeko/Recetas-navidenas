@@ -1,19 +1,66 @@
-import React from 'react';
-import RecipeCard from '../components/RecipeCard';
-import useFetchRecipes from '../hooks/useFetchRecipes';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
 
-const Home: React.FC = () => {
-  const { recipes, loading } = useFetchRecipes();
+interface Recipe {
+  _id: string;
+  title: string;
+  category: string;
+  ingredients: string[];
+  instructions: string;
+  image?: string;
+}
 
-  if (loading) return <p>Loading recipes...</p>;
+const RecipeDetails: React.FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchRecipe = async () => {
+      try {
+        const response = await axios.get(`/api/recipes/${id}`);
+        setRecipe(response.data);
+      } catch (err) {
+        setError('Error fetching the recipe. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchRecipe();
+  }, [id]);
+
+  if (loading) {
+    return <p>Loading recipe details...</p>;
+  }
+
+  if (error) {
+    return <p className="error">{error}</p>;
+  }
 
   return (
-    <div className="home">
-      {recipes.map((recipe) => (
-        <RecipeCard key={recipe._id} recipe={recipe} />
-      ))}
+    <div className="recipe-details">
+      {recipe ? (
+        <>
+          <h1>{recipe.title}</h1>
+          <p><strong>Category:</strong> {recipe.category}</p>
+          {recipe.image && <img src={recipe.image} alt={recipe.title} />}
+          <h3>Ingredients:</h3>
+          <ul>
+            {recipe.ingredients.map((ingredient, index) => (
+              <li key={index}>{ingredient}</li>
+            ))}
+          </ul>
+          <h3>Instructions:</h3>
+          <p>{recipe.instructions}</p>
+        </>
+      ) : (
+        <p>No recipe found</p>
+      )}
     </div>
   );
 };
 
-export default Home;
+export default RecipeDetails;

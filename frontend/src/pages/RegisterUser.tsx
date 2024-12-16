@@ -19,12 +19,15 @@ import React, { useState } from 'react';
     };
 
     return (
-      <form onSubmit={handleSubmit}>
-        <input type="text" placeholder="Username" onChange={e => setFormData({ ...formData, username: e.target.value })} />
-        <input type="email" placeholder="Email" onChange={e => setFormData({ ...formData, email: e.target.value })} />
-        <input type="password" placeholder="Password" onChange={e => setFormData({ ...formData, password: e.target.value })} />
-        <button type="submit">Register User</button>
-      </form>
+      <div className='container'>
+        <h1>Add a New User</h1>
+        <form onSubmit={handleSubmit}>
+          <input type="text" placeholder="Username" onChange={e => setFormData({ ...formData, username: e.target.value })} />
+          <input type="email" placeholder="Email" onChange={e => setFormData({ ...formData, email: e.target.value })} />
+          <input type="password" placeholder="Password" onChange={e => setFormData({ ...formData, password: e.target.value })} />
+          <button type="submit">Register User</button>
+        </form>
+      </div>
     );
   };
 
